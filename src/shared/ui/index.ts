@@ -1,2 +1,3 @@
 import AutoPlayAudio from "./AutoPlay";
-export {AutoPlayAudio}
+import ScannedEntry from "./scanned-entry";
+export {AutoPlayAudio, ScannedEntry}

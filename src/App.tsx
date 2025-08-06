@@ -3,13 +3,15 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ProductRegistrationPage from "./pages/ProductRegistration";
 
 function App() {
- 
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route index element={<LookUp />} />
-          <Route path="/product/register" element={<ProductRegistrationPage />} />
+          <Route path="/" element={<LookUp />} />
+          <Route
+            path="/product/register"
+            element={<ProductRegistrationPage />}
+          />
         </Routes>
       </BrowserRouter>
     </>
