@@ -16,11 +16,11 @@ const useItemStore = create<ItemStore>((set) => ({
     })),
 
     removeItem: itemCode => set((state) => ({
-        items: state.items.filter(item => item.code !== itemCode)
+        items: state.items.filter(item => item.barcode !== itemCode)
     })),
 
     updateItem: (itemCode, newItem) => set((state) => ({
-        items: state.items.map(item => item.code === itemCode ? {...item, newItem} : item)
+        items: state.items.map(item => item.barcode === itemCode ? {...item, newItem} : item)
     }))
 }))
 

@@ -38,6 +38,9 @@ const ProductRegistrationPage = () => {
   useEffect(() => {
     async function getCategories() {
       const { data, error } = await supabase.from("Category").select();
+      if (error) {
+        console.log(error);
+      }
       setCategories(data as category[]);
       console.log(data);
     }
