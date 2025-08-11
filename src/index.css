@@ -118,3 +118,14 @@
     @apply bg-background text-foreground;
   }
 }
+
+.overlay-box {
+  position: absolute;
+  border: 2px solid lime;
+  width: 200px;
+  height: 100px;
+  top: calc(50% - 50px);
+  left: calc(50% - 100px);
+  pointer-events: none;
+  z-index: 10;
+}
