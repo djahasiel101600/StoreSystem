@@ -3,7 +3,7 @@ import type { item } from "../../shared/types/item";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+// import { useState } from "react";
 import useItemStore from "@/shared/store/useStore";
 
 const resolver: Resolver<item> = async (values) => {
@@ -29,7 +29,7 @@ const ProductRegistrationPage = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    // formState: { errors },
   } = useForm<item>({ resolver });
   const onSubmit = handleSubmit((data) => {
     // setFormData(data);
