@@ -5,7 +5,7 @@ import type { item } from "../../shared/types/item";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import useItemStore from "@/shared/store/useStore";
 import { Label } from "@/components/ui/label";
 
@@ -54,9 +54,11 @@ const ProductRegistrationPage = () => {
     register,
     handleSubmit,
     formState: { errors },
+    control,
   } = useForm<item>({ resolver });
   const onSubmit = handleSubmit((data) => {
-    setFormData(data);
+    insertItem("product", data);
+    // setFormData(data);
     addItem(data);
     alert(`${data.name} saved successfully`);
     navigate("/");
