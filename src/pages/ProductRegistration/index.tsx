@@ -24,7 +24,7 @@ const ProductRegistrationPage = () => {
   const [searchParams] = useSearchParams();
   const code = searchParams.get("code");
   const navigate = useNavigate();
-  const [formData, setFormData] = useState<item>();
+  // const [formData, setFormData] = useState<item>();
 
   const {
     register,
@@ -32,7 +32,7 @@ const ProductRegistrationPage = () => {
     formState: { errors },
   } = useForm<item>({ resolver });
   const onSubmit = handleSubmit((data) => {
-    setFormData(data);
+    // setFormData(data);
     addItem(data);
     alert(`${data.name} saved successfully`);
     navigate("/");
