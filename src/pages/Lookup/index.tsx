@@ -6,7 +6,7 @@ import BarcodeScanner from "react-qr-barcode-scanner";
 import useItemStore from "@/shared/store/useStore";
 
 const LookUp = () => {
-  const { items, removeItem } = useItemStore();
+  const { items } = useItemStore();
   const availableItems = items;
   const [data, setData] = useState<item[]>([]);
   const [beep, setBeep] = useState(false);
@@ -28,6 +28,9 @@ const LookUp = () => {
         facingMode="environment"
         delay={300}
         onUpdate={(err: any, result: any) => {
+          if(err){
+            console.log(err)
+          }
           if (result) {
             const retrieved = retrieveItem(result.getText())[0];
             if (!retrieved) {
