@@ -1,3 +1,3 @@
-import handleScannerUpdate from "./scanner/scanner";
+// import handleScannerUpdate from "./scanner/scanner";
 
-export {handleScannerUpdate}
+// export {handleScannerUpdate}

@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 
 const LookUp = () => {
-  const { items, removeItem } = useItemStore();
+  const { items } = useItemStore();
   const availableItems = items;
   const [data, setData] = useState<item[]>([]);
   const [beep, setBeep] = useState(false);

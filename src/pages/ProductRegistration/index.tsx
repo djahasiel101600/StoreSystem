@@ -5,7 +5,7 @@ import type { item } from "../../shared/types/item";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import useItemStore from "@/shared/store/useStore";
 import { Label } from "@/components/ui/label";
 
@@ -48,18 +48,17 @@ const ProductRegistrationPage = () => {
   const [searchParams] = useSearchParams();
   const code = searchParams.get("code");
   const navigate = useNavigate();
-  const [formData, setFormData] = useState<item>();
+  // const [formData, setFormData] = useState<item>();
 
   const {
     register,
     handleSubmit,
-    control,
     formState: { errors },
   } = useForm<item>({ resolver });
-
-  const onSubmit = handleSubmit((item) => {
-    insertItem("Product", item);
-    alert(`${item.name} saved successfully`);
+  const onSubmit = handleSubmit((data) => {
+    setFormData(data);
+    addItem(data);
+    alert(`${data.name} saved successfully`);
     navigate("/");
   });
 
