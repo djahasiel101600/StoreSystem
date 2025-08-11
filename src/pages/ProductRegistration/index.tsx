@@ -151,7 +151,7 @@ const ProductRegistrationPage = () => {
           name="productCategory"
           control={control}
           render={({ field }) => (
-            <Select onValueChange={field.onChange} value={field.value ?? ""}>
+            <Select onValueChange={field.onChange} value={field.value ?? 0}>
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Category" />
               </SelectTrigger>

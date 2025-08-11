@@ -12,7 +12,7 @@ const ScannedEntry = ({
 }) => {
   const [quantity, setQuantity] = useState(1);
   if (quantity === 0) {
-    onDelete(true, scannedItem.code);
+    onDelete(true, scannedItem.barcode);
   }
   return (
     <div className="flex gap-2 items-center justify-between px-4">
