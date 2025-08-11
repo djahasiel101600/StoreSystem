@@ -61,7 +61,6 @@ const ProductRegistrationPage = () => {
   } = useForm<item>({ resolver });
   const onSubmit = handleSubmit((data) => {
     insertItem("product", data);
-    // setFormData(data);
     addItem(data);
     alert(`${data.name} saved successfully`);
     navigate("/");
