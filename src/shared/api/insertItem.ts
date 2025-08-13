@@ -1,4 +1,4 @@
-import supabase from '@/shared/utils/supabase'
+import supabase from '@/shared/api/client'
 import type { item } from '@/shared/types'
 
 

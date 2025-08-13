@@ -1,7 +1,7 @@
 import supabase from "@/shared/api/client";
 
 import { useForm, type Resolver, Controller } from "react-hook-form";
-import type { item } from "../../shared/types/item";
+import type { item } from "../../../shared/types/item";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Input } from "@/shared/ui/input";
 import { Button } from "@/shared/ui/button";
@@ -17,7 +17,7 @@ import {
   SelectValue,
 } from "@/shared/ui/select";
 import type { category } from "@/shared/types/category";
-import insertItem from "../../shared/api/insertItem";
+import insertItem from "../../../shared/api/insertItem";
 
 const resolver: Resolver<item> = async (values) => {
   return {
@@ -32,7 +32,7 @@ const resolver: Resolver<item> = async (values) => {
       : {},
   };
 };
-const ProductRegistrationPage = () => {
+const AddProductPage = () => {
   const [categories, setCategories] = useState<category[]>([]);
 
   useEffect(() => {
@@ -181,4 +181,4 @@ const ProductRegistrationPage = () => {
   );
 };
 
-export default ProductRegistrationPage;
+export default AddProductPage;

@@ -1,14 +1,21 @@
 import { useState } from "react";
-import { AutoPlayAudio, ScannedEntry } from "../../shared/ui";
+import { AutoPlayAudio, ScannedEntry } from "@/shared/ui";
 import type { item } from "../../shared/types/item";
 import { useNavigate } from "react-router-dom";
 import BarcodeScanner, { BarcodeFormat } from "react-qr-barcode-scanner";
 import useItemStore from "@/shared/store/useStore";
-import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
+import { Label } from "@/shared/ui/label";
+import { Switch } from "@/shared/ui/switch";
+import { useProducts } from "./transactions";
 
 const LookUp = () => {
-  const { items } = useItemStore();
+  const { items, addItem } = useItemStore();
+  const { products, error } = useProducts();
+  if (!error) {
+    products.map((product) => {
+      addItem(product);
+    });
+  }
   const availableItems = items;
   const [data, setData] = useState<item[]>([]);
   const [beep, setBeep] = useState(false);
@@ -33,7 +40,7 @@ const LookUp = () => {
         <Switch id="airplane-mode" onClick={() => setTorch(!torch)} />
         <Label htmlFor="airplane-mode">Torch</Label>
       </div>
-      <div className="relative h-[300px] overflow-hidden mx-4 rounded-2xl">
+      <div className="relative h-[500px] overflow-hidden mx-4 rounded-2xl">
         <BarcodeScanner
           torch={torch}
           videoConstraints={{
@@ -41,7 +48,7 @@ const LookUp = () => {
             height: { ideal: 1080 },
             facingMode: "environment",
           }}
-          delay={400}
+          delay={800}
           formats={[BarcodeFormat.EAN_13]}
           onUpdate={(err: any, result: any) => {
             if (result) {

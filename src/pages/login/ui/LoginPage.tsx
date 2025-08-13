@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/button";
-import supabase from "@/shared/utils/supabase";
+import { Button } from "@/shared/ui/button";
+import supabase from "@/shared/api/client";
 
 async function handleLogin() {
   let { data, error } = await supabase.auth.signInWithOAuth({
@@ -12,8 +12,8 @@ async function handleLogin() {
   console.log("Login successfull", data);
 }
 
-const Login = () => {
+const LoginPage = () => {
   return <Button onClick={handleLogin}>Login with GitHub</Button>;
 };
 
-export default Login;
+export default LoginPage;

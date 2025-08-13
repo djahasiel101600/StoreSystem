@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { item } from "../types/item";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Button } from "@/shared/ui/button";
+import { Input } from "@/shared/ui/input";
 
 const ScannedEntry = ({
   scannedItem,

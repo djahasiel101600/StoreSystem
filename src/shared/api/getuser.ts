@@ -1,4 +1,4 @@
-import supabase from "./supabase";
+import supabase from "./client";
 
 async function getUser(){
     const {data: {user}} = await supabase.auth.getUser()
