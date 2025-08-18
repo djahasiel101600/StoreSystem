@@ -1,16 +1,17 @@
 import type { Product } from "@/entities/product/model/product.types";
-import { getProducts } from "@/shared/api";
 
-function handleScan(err: any, result: any) {
-    
+function handleScan(err: any, result: any, data: Product[]) {
+
     if(!err && result){
-        console.log(result.text);
-        let products: Product[] = []
-        getProducts().then(data => products = data).catch(error => console.log(error))
-        const matchedProduct = products.filter(prod => prod.barcode === result.text)
-        console.log("Barcode: ",matchedProduct[0].barcode)
-        console.log("Name: ",matchedProduct[0].name)
-        console.log("Price: ",matchedProduct[0].price)
+        const barcode = result.text
+        const matchedProduct = data.filter(product => product.barcode === barcode)
+
+        if (matchedProduct.length === 1) {
+            const product = matchedProduct[0]
+            return {status: true, data:product, barcode: barcode}
+        } else {
+            return {status: false, data: [], barcode: barcode}
+        }
     }
 }
 

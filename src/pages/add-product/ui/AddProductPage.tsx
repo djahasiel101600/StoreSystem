@@ -18,6 +18,7 @@ import {
 } from "@/shared/ui/select";
 import type { category } from "@/shared/types/category";
 import insertItem from "../../../shared/api/insertItem";
+import insertProduct from "../api/insertProduct";
 
 const resolver: Resolver<item> = async (values) => {
   return {
@@ -49,7 +50,7 @@ const AddProductPage = () => {
 
   const { addItem } = useItemStore();
   const [searchParams] = useSearchParams();
-  const code = searchParams.get("code");
+  const code = searchParams.get("barcode");
   const navigate = useNavigate();
   // const [formData, setFormData] = useState<item>();
 
@@ -59,11 +60,12 @@ const AddProductPage = () => {
     formState: { errors },
     control,
   } = useForm<item>({ resolver });
+
   const onSubmit = handleSubmit((data) => {
-    insertItem("product", data);
+    insertItem("Product", data);
     addItem(data);
     alert(`${data.name} saved successfully`);
-    navigate("/");
+    navigate("/scanner");
   });
 
   return (
