@@ -1,7 +1,7 @@
 import supabase from "@/shared/api/client";
 
 import { useForm, type Resolver, Controller } from "react-hook-form";
-import type { item } from "../../../shared/types/item";
+import { type item } from "@/shared/types";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Input } from "@/shared/ui/input";
 import { Button } from "@/shared/ui/button";
@@ -17,8 +17,7 @@ import {
   SelectValue,
 } from "@/shared/ui/select";
 import type { category } from "@/shared/types/category";
-import insertItem from "../../../shared/api/insertItem";
-import insertProduct from "../api/insertProduct";
+import { insertItem } from "@/shared/api/";
 
 const resolver: Resolver<item> = async (values) => {
   return {

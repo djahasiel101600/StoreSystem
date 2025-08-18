@@ -1,4 +1,5 @@
 import supabase from "./client";
 import { getProducts } from "./queries";
+import insertItem from "./insertItem";
 
-export {supabase, getProducts}
+export {supabase, getProducts, insertItem}
