@@ -5,6 +5,5 @@ export async function getProducts(){
     if(error){
         throw error;
     }
-    console.log("queries.ts: ", data)
     return data
 }
