@@ -1,6 +1,6 @@
 const ROUTES = {
     LOGIN: '/login',
-    SCANNER: '/scanner',
+    SCANNER: '/',
     ADD_PRODUCT: '/add-product'
 }
 
