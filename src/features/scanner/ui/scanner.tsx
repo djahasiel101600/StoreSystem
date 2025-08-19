@@ -10,6 +10,7 @@ const BarcodeScanner = () => {
 
   const [products, setProducts] = useState<Product[]>([]);
   const [scanResult, setScanResult] = useState<any>();
+  const beep = new Audio("/scanbeep.mp3");
 
   getProducts()
     .then((data) => setProducts(data))
@@ -19,6 +20,7 @@ const BarcodeScanner = () => {
     if (scanResult && scanResult.status) {
       const scannedProduct: Product = scanResult.data;
       console.log(scannedProduct.name);
+      beep.play();
     } else if (scanResult) {
       const barcode = scanResult.barcode;
       navigate(`/add-product?barcode=${barcode}`);

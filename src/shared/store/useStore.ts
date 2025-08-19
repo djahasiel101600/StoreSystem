@@ -1,27 +1,31 @@
 import {create} from "zustand"
 import type { item } from "../types/item"
+import { type Product } from "@/entities/product/model/product.types";
 
-interface ItemStore {
-    items: item[];
-    addItem: (item: item) => void;
-    removeItem: (itemCode: string) => void;
-    updateItem: (itemCode: string, item: item) => void
+interface ProductStore {
+    products: Product[];
+    addProduct: (product: Product) => void;
+    removeProduct: (barcode: string) => void;
+    updateProduct: (barcode: string, item: item) => void
+    setProducts: (products: Product[]) => void
 }
 
-const useItemStore = create<ItemStore>((set) => ({
-    items: [],
+const useProductStore = create<ProductStore>((set) => ({
+    products: [],
 
-    addItem: item => set((state) => ({
-        items: [...state.items, item]
+    addProduct: product => set((state) => ({
+        products: [...state.products, product]
     })),
 
-    removeItem: itemCode => set((state) => ({
-        items: state.items.filter(item => item.barcode !== itemCode)
+    removeProduct: barcode => set((state) => ({
+        products: state.products.filter(product => product.barcode !== barcode)
     })),
 
-    updateItem: (itemCode, newItem) => set((state) => ({
-        items: state.items.map(item => item.barcode === itemCode ? {...item, newItem} : item)
-    }))
+    updateProduct: (barcode, newProduct) => set((state) => ({
+        products: state.products.map(product => product.barcode === barcode ? {...product, newProduct} : product)
+    })),
+
+    setProducts: newProducts => set({products: newProducts})
 }))
 
-export default useItemStore;
+export default useProductStore;
