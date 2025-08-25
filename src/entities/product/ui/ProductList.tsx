@@ -1,3 +1,8 @@
+import { useProductStore } from "@/shared/store";
+
+import { FaPlusCircle } from "react-icons/fa";
+import { FaMinusCircle } from "react-icons/fa";
+
 import {
   Table,
   TableBody,
@@ -8,80 +13,112 @@ import {
   TableHeader,
   TableRow,
 } from "@/shared/ui/table";
+import type { Product } from "../model/product.types";
+import { useEffect, useState } from "react";
 
-const invoices = [
-  {
-    invoice: "INV001",
-    paymentStatus: "Paid",
-    totalAmount: "$250.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    invoice: "INV002",
-    paymentStatus: "Pending",
-    totalAmount: "$150.00",
-    paymentMethod: "PayPal",
-  },
-  {
-    invoice: "INV003",
-    paymentStatus: "Unpaid",
-    totalAmount: "$350.00",
-    paymentMethod: "Bank Transfer",
-  },
-  {
-    invoice: "INV004",
-    paymentStatus: "Paid",
-    totalAmount: "$450.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    invoice: "INV005",
-    paymentStatus: "Paid",
-    totalAmount: "$550.00",
-    paymentMethod: "PayPal",
-  },
-  {
-    invoice: "INV006",
-    paymentStatus: "Pending",
-    totalAmount: "$200.00",
-    paymentMethod: "Bank Transfer",
-  },
-  {
-    invoice: "INV007",
-    paymentStatus: "Unpaid",
-    totalAmount: "$300.00",
-    paymentMethod: "Credit Card",
-  },
-];
+type ScannedItemType = Product & { quantity: number };
 
 export function ProductList() {
+  const { products } = useProductStore();
+  const [scannedItems, setScannedItems] = useState<ScannedItemType[]>([]);
+
+  useEffect(() => {
+    setScannedItems((prevScanned) => {
+      return products.map((product) => {
+        const existing = prevScanned.find(
+          (item) => item.barcode === product.barcode
+        );
+        if (existing) {
+          return {
+            ...product,
+            quantity: existing?.quantity + 1, // keep previous quantity if available
+          };
+        } else {
+          return {
+            ...product,
+            quantity: 1, // keep previous quantity if available
+          };
+        }
+      });
+    });
+  }, [products]);
+
+  const productHeaders = ["Name", "Price", "Qty", "Total", "Action"];
+
+  const updateQty = (barcode: string, newQty: number) => {
+    setScannedItems((prev) =>
+      prev.map((item) =>
+        item.barcode === barcode
+          ? { ...item, quantity: newQty === -1 ? 0 : newQty }
+          : item
+      )
+    );
+  };
   return (
-    <Table>
-      <TableCaption>A list of your recent invoices.</TableCaption>
-      <TableHeader>
-        <TableRow>
-          <TableHead className="w-[100px]">Invoice</TableHead>
-          <TableHead>Status</TableHead>
-          <TableHead>Method</TableHead>
-          <TableHead className="text-right">Amount</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {invoices.map((invoice) => (
-          <TableRow key={invoice.invoice}>
-            <TableCell className="font-medium">{invoice.invoice}</TableCell>
-            <TableCell>{invoice.paymentStatus}</TableCell>
-            <TableCell>{invoice.paymentMethod}</TableCell>
-            <TableCell className="text-right">{invoice.totalAmount}</TableCell>
+    <>
+      <div className="mt-2 flex flex-row justify-end"></div>
+      <Table>
+        <TableCaption>A list of your scanned products.</TableCaption>
+        <TableHeader>
+          <TableRow>
+            {productHeaders.map((header, idx) => (
+              <TableHead key={idx}>{header}</TableHead>
+            ))}
           </TableRow>
-        ))}
-      </TableBody>
-      <TableFooter>
-        <TableRow>
-          <TableCell colSpan={3}>Total</TableCell>
-          <TableCell className="text-right">$2,500.00</TableCell>
-        </TableRow>
-      </TableFooter>
-    </Table>
+        </TableHeader>
+        <TableBody>
+          {scannedItems ? (
+            scannedItems
+              .filter(
+                (item, index, self) =>
+                  index === self.findIndex((i) => i.barcode === item.barcode)
+              )
+              .map((product) => (
+                <TableRow
+                  key={product.barcode}
+                  className={
+                    product.quantity === 0 ? "line-through text-gray-400" : ""
+                  }
+                >
+                  <TableCell className="font-medium">{product.name}</TableCell>
+                  <TableCell>{product.price.toLocaleString()}</TableCell>
+                  <TableCell>{product.quantity}</TableCell>
+                  <TableCell>{product.price * product.quantity}</TableCell>
+                  <TableCell className="flex gap-2 text-center">
+                    <FaPlusCircle
+                      onClick={() =>
+                        updateQty(product.barcode, product.quantity + 1)
+                      }
+                    />
+                    <FaMinusCircle
+                      onClick={() =>
+                        updateQty(product.barcode, product.quantity - 1)
+                      }
+                    />
+                  </TableCell>
+                </TableRow>
+              ))
+          ) : (
+            <TableRow>
+              <TableCell colSpan={5} className="text-center">
+                No scanned items
+              </TableCell>
+            </TableRow>
+          )}
+        </TableBody>
+        <TableFooter>
+          <TableRow>
+            <TableCell colSpan={4}>Total</TableCell>
+            <TableCell className="text-right">
+              Php{" "}
+              {scannedItems
+                .reduce((sum, item) => sum + item.price * item.quantity, 0)
+                .toLocaleString()}
+              .00
+            </TableCell>
+          </TableRow>
+        </TableFooter>
+      </Table>
+    </>
   );
 }

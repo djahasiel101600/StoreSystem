@@ -1,11 +1,15 @@
-import { RouterProvider, StoreProvider } from "./providers";
+import { RouterProvider } from "./providers";
 import { AppRoutes } from "./routes";
+import { StoreProvider } from "./providers";
+import { Layout } from "@/shared/ui";
 
 const App = () => {
   return (
     <RouterProvider>
       <StoreProvider>
-        <AppRoutes />
+        <Layout>
+          <AppRoutes />
+        </Layout>
       </StoreProvider>
     </RouterProvider>
   );

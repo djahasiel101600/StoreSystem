@@ -4,10 +4,12 @@ import { type Product } from "@/entities/product/model/product.types";
 
 interface ProductStore {
     products: Product[];
+    productDatabase: Product[];
+    setProductDatabase: (dbProducts:Product[]) => void;
     addProduct: (product: Product) => void;
     removeProduct: (barcode: string) => void;
-    updateProduct: (barcode: string, item: item) => void
-    setProducts: (products: Product[]) => void
+    updateProduct: (barcode: string, item: item) => void;
+    removeAllProducts: () => void;
 }
 
 const useProductStore = create<ProductStore>((set) => ({
@@ -25,7 +27,12 @@ const useProductStore = create<ProductStore>((set) => ({
         products: state.products.map(product => product.barcode === barcode ? {...product, newProduct} : product)
     })),
 
-    setProducts: newProducts => set({products: newProducts})
+    removeAllProducts: () => set(() => ({products: []})),
+
+    productDatabase: [],
+
+    setProductDatabase: (dbProducts) => set(() => ({productDatabase: dbProducts}))
+
 }))
 
 export default useProductStore;

@@ -1,13 +1,14 @@
+import { ProductList } from "@/entities/product/ui/ProductList";
 import BarcodeScanner from "@/features/scanner/ui/scanner";
-import useItemStore from "@/shared/store/useStore";
+import BarcodeSearchbar from "@/shared/ui/barcodeSearchbar";
 
 const ScanPage = () => {
-  const { products } = useItemStore();
-  // console.log(products);
   return (
-    <div>
+    <div className="p-4">
+      <h1 className="text-2xl p-2">Barcode Scanner</h1>
       <BarcodeScanner />
-      {products.length > 0 && products[0].barcode}
+      <BarcodeSearchbar />
+      <ProductList />
     </div>
   );
 };

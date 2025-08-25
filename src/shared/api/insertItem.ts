@@ -11,13 +11,12 @@ async function insertItem(table: string, item: item) {
   ])
   .select()
 
-  if(error){
+  if(!data && error){
     console.log("Something went wrong while saving:", user?.id)
     console.log(error)
     return false
   }
 
-  console.log("Inserted", data)
 }
 
 export default insertItem

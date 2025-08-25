@@ -6,8 +6,10 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { Input } from "@/shared/ui/input";
 import { Button } from "@/shared/ui/button";
 import { useState, useEffect } from "react";
-import useItemStore from "@/shared/store/useStore";
+import useProductStore from "@/shared/store/useStore";
 import { Label } from "@/shared/ui/label";
+
+import { ROUTES } from "@/shared/config";
 
 import {
   Select,
@@ -18,6 +20,7 @@ import {
 } from "@/shared/ui/select";
 import type { category } from "@/shared/types/category";
 import { insertItem } from "@/shared/api/";
+import { toast } from "sonner";
 
 const resolver: Resolver<item> = async (values) => {
   return {
@@ -47,11 +50,14 @@ const AddProductPage = () => {
     getCategories();
   }, []);
 
-  const { addItem } = useItemStore();
+  const { addProduct, productDatabase, products } = useProductStore();
   const [searchParams] = useSearchParams();
   const code = searchParams.get("barcode");
   const navigate = useNavigate();
-  // const [formData, setFormData] = useState<item>();
+
+  if (productDatabase.find((predicate) => predicate.barcode === code)) {
+    navigate("/");
+  }
 
   const {
     register,
@@ -62,9 +68,14 @@ const AddProductPage = () => {
 
   const onSubmit = handleSubmit((data) => {
     insertItem("Product", data);
-    addItem(data);
-    alert(`${data.name} saved successfully`);
-    navigate("/scanner");
+    const dataExisting = products.find(
+      (predicate) => data.barcode === predicate.barcode
+    );
+    if (!dataExisting) {
+      addProduct(data);
+      toast(`${data.name} saved successfully`);
+      navigate(ROUTES.SCANNER);
+    }
   });
 
   return (

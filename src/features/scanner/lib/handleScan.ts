@@ -1,7 +1,6 @@
 import type { Product } from "@/entities/product/model/product.types";
 
 function handleScan(err: any, result: any, data: Product[]) {
-
     if(!err && result){
         const barcode = result.text
         const matchedProduct = data.filter(product => product.barcode === barcode)

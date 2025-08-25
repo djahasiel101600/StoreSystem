@@ -1,25 +1,17 @@
-import { useEffect, useState, type ReactNode } from "react";
 import { getProducts } from "@/shared/api";
-import type { Product } from "@/entities/product/model/product.types";
 import { useProductStore } from "@/shared/store";
+import { useEffect, type ReactNode } from "react";
 
 const StoreProvider = ({ children }: { children: ReactNode }) => {
-  const { setProducts } = useProductStore();
-  const [newProducts, setNewProducts] = useState<Product[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const { setProductDatabase } = useProductStore();
 
-  getProducts()
-    .then((data) => {
-      setNewProducts(data);
-      setIsLoading(true);
-    })
-    .finally(() => setIsLoading(false));
   useEffect(() => {
-    setProducts(newProducts);
+    getProducts().then((data) => {
+      setProductDatabase(data);
+    });
+  }, []);
 
-    console.log("Store Provider is called:", newProducts);
-  }, [isLoading]);
-  return <>{!isLoading && children}</>;
+  return <>{children}</>;
 };
 
 export default StoreProvider;

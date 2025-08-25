@@ -9,7 +9,7 @@ const BarcodeScannerWidget = ({ onScan }: BarcodeScanner) => {
     <>
       <div className="relative rounded-2xl overflow-hidden z-0">
         <BarcodeScanner
-          delay={500}
+          delay={800}
           onUpdate={onScan}
           width={500}
           height={500}

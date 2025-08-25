@@ -1,15 +1,17 @@
 import { Label } from "./label";
 import { Button } from "./button";
-import AutoPlayAudio from "./AutoPlay";
 import { Select } from "./select";
 import { Switch } from "./switch";
 import ScannedEntry from "./scanned-entry";
+import Layout from "./layout";
+import { Toaster } from "sonner";
 
 export {
     Label,
     Button,
-    AutoPlayAudio,
     Select,
     Switch,
-    ScannedEntry
+    ScannedEntry,
+    Layout,
+    Toaster
 }
